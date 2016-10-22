@@ -1,6 +1,6 @@
-class BowtiesController < ApplicationController\
+class BowtiesController < ApplicationController
 
   def index
-    render '/index'
+
   end
 end
