@@ -10,9 +10,9 @@ var createIndex = function (bowties) {
   // }
 
   for (var i = 0; i < bowties.length; i++) {
-    html += "<div class='col s3'><div class='card'><div class='card-image waves-effect waves-block waves-light'><img src='" +
+    html += "<div class='col s12 m6 l4'><div class='card medium'><div class='card-image waves-effect waves-block waves-light'><img class='activator' src='" +
             bowties[i].image_url +
-            "'><span class='card-title'>" +
+            "'><span class='activator card-title'>" +
             bowties[i].material +
             " " +
             bowties[i].pattern +
@@ -24,7 +24,7 @@ var createIndex = function (bowties) {
             bowties[i].pattern +
             " bowtie</p><p class='price'>$" +
             bowties[i].retail_price +
-            "</p></div><div class='card-action'><a id='edit' class='activator action-links' href='#''>Edit</a><a id='delete' class='action-links' href='#'>Delete</a></div><div class='card-reveal'><span class='card-title grey-text text-darken-4'>" +
+            "</p></div><div class='card-action'><a id='edit' class='action-links' href='#''>Edit</a><a id='delete' class='action-links' href='#'>Delete</a></div><div class='card-reveal'><span class='card-title grey-text text-darken-4'>" +
             bowties[i].style +
             " " +
             bowties[i].material +
