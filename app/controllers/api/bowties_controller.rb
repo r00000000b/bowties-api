@@ -12,22 +12,22 @@ module API
     end
 
     def create
-      @bowtie = Bowtie.new(bowtie_params)
+      @bowtie = Bowtie.new(material: params[:material], pattern: params[:pattern], style: params[:style], image_url: params[:image_url], wholesale_price: params[:wholesale_price], retail_price: params[:retail_price])
 
       if @bowtie.save
-        render json: bowtie, status: 201, location: [:api, @bowtie]
+        render json: @bowtie, status: 201, location: [:api, @bowtie]
       else
-        render json: bowtie.errors, status: 422
+        render json: @bowtie.errors, status: 422
       end
     end
 
     def update
-      @bowtie.assign_attributes(bowtie_params)
+      @bowtie.assign_attributes(material: params[:material], pattern: params[:pattern], style: params[:style], image_url: params[:image_url], wholesale_price: params[:wholesale_price], retail_price: params[:retail_price])
 
       if @bowtie.save
         head 204
       else
-        render json: bowtie.errors, status: 422
+        render json: @bowtie.errors, status: 422
       end
     end
 
@@ -44,14 +44,12 @@ module API
 
     def set_bowtie
       @bowtie = Bowtie.find_by(id: params[:id])
-      if @bowtie.nil?
-        render json: "Bowtie with id #{params.id} not found"
-      end
+      @message = "Cannot find Bowtie with ID #{params[:id]}" if @bowtie.nil?
     end
 
-    def bowtie_params
-      params.require(:bowtie).permit(:material, :pattern, :style, :image_url, :wholesale_price, :retail_price)
-    end
+    # def bowtie_params
+    #   params.require(:bowties).permit(:material, :pattern, :style, :image_url, :wholesale_price, :retail_price)
+    # end
 
   end
 

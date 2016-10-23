@@ -37,9 +37,32 @@ var getBowties = function () {
 }
 
 var createModal = function() {
-  var html = "<div id='newModal' class='modal'><div class='modal-content'><h4>Create New Bowtie</h4><form class='col s12'><div class='row'><div class='input-field col s12'><input id='bowtieMaterial' type='text' class='validate'><label for='bowtieMaterial'>Material</label></div><div class='input-field col s12'><input id='bowtiePattern' type='text' class='validate'><label for='bowtiePattern'>Pattern</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieStyle' type='text' class='validate'><label for='bowtieStyle'>Style</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieUrl' type='text' class='validate'><label for='bowtieUrl'>Image Url</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieWholesale' type='number' class='validate'><label for='bowtieWholesale'>Wholesale Price</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieRetail' type='number' class='validate'><label for='bowtieRetail'>Retail Price</label></div></div></form></div><div class='modal-footer'><a id='updateBowtie' href='#!' class='modal-action modal-close waves-effect waves-green btn-flat'>Save</a><a href='#!' class='modal-action modal-close waves-effect waves-green btn-flat modal-close'>Cancel</a></div></div>";
+  $('#newModal').remove();
+  var html = "<div id='newModal' class='modal'><div class='modal-content'><h4>Create New Bowtie</h4><form class='col s12'><div class='row'><div class='input-field col s12'><input id='bowtieMaterial' type='text' class='validate'><label for='bowtieMaterial'>Material</label></div><div class='input-field col s12'><input id='bowtiePattern' type='text' class='validate'><label for='bowtiePattern'>Pattern</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieStyle' type='text' class='validate'><label for='bowtieStyle'>Style</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieUrl' type='text' class='validate'><label for='bowtieUrl'>Image Url</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieWholesale' type='number' class='validate'><label for='bowtieWholesale'>Wholesale Price</label></div></div><div class='row'><div class='input-field col s12'><input id='bowtieRetail' type='number' class='validate'><label for='bowtieRetail'>Retail Price</label></div></div></form></div><div class='modal-footer'><a id='enterBowtie' href='#!' class='modal-action modal-close waves-effect waves-green btn-flat'>Save</a><a href='#!' class='modal-action modal-close waves-effect waves-green btn-flat modal-close'>Cancel</a></div></div>";
   $('body').append(html)
   $('#newModal').openModal();
+  addBowtieEntryEventListener();
+}
+
+var addBowtieEntryEventListener = function() {
+  $('#enterBowtie').click(function() {
+    var bowtieParams = {
+      material: $('#bowtieMaterial').val(),
+      pattern: $('#bowtiePattern').val(),
+      style: $('#bowtieStyle').val(),
+      image_url: $('#bowtieUrl').val(),
+      wholesale_price: $('#bowtieWholesale').val(),
+      retail_price: $('#bowtieRetail').val()
+    }
+    $.ajax({
+      method: 'POST',
+      url: '/api/bowties',
+      data: bowtieParams,
+      dataType: 'json'
+    }).done(function(){
+      window.location.href = '/bowties'
+    })
+  })
 }
 
 $(document).ready(function(){
@@ -48,4 +71,5 @@ $(document).ready(function(){
 $('#addContent').click(function() {
   createModal();
 });
+
 })
