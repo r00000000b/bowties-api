@@ -1,4 +1,5 @@
 var createIndex = function (bowties) {
+  $('#content').html('')
   var html = "";
 
   for (var i = 0; i < bowties.length; i++) {
@@ -19,28 +20,28 @@ var createIndex = function (bowties) {
                       "<form class='col s12'>" +
                         "<div class='row'>" +
                           "<div class='input-field col s6'>" +
-                            "<input id='bowtieMaterial' type='text' class='validate' value='" + bowties[i].material + "'><label class='active' for='bowtieMaterial'>Material</label>" +
+                            "<input id='btMaterial' type='text' class='validate' value='" + bowties[i].material + "'><label class='active' for='btMaterial'>Material</label>" +
                           "</div>" +
                           "<div class='input-field col s6'>" +
-                            "<input id='bowtiePattern' type='text' class='validate' value='" + bowties[i].pattern + "'><label class='active' for='bowtiePattern'>Pattern</label>" +
+                            "<input id='btPattern' type='text' class='validate' value='" + bowties[i].pattern + "'><label class='active' for='btPattern'>Pattern</label>" +
                           "</div>" +
                         "</div>" +
                         "<div class='row'>" +
                           "<div class='input-field col s12'>" +
-                            "<input id='bowtieStyle' type='text' class='validate' value='" + bowties[i].style + "'><label class='active' for='bowtieStyle'>Style</label>" +
+                            "<input id='btStyle' type='text' class='validate' value='" + bowties[i].style + "'><label class='active' for='btStyle'>Style</label>" +
                           "</div>" +
                         "</div>" +
                         "<div class='row'>" +
                           "<div class='input-field col s12'>" +
-                            "<input id='bowtieUrl' type='text' class='validate' value='" + bowties[i].image_url + "'><label class='active' for='bowtieUrl'>Image Url</label>" +
+                            "<input id='btUrl' type='text' class='validate' value='" + bowties[i].image_url + "'><label class='active' for='btUrl'>Image Url</label>" +
                           "</div>" +
                         "</div>" +
                         "<div class='row'>" +
                           "<div class='input-field col s12'>" +
-                            "<input id='bowtieWholesale' type='number' class='validate'><label class='active' for='bowtieWholesale'>Wholesale Price</label>" +
+                            "<input id='btWholesale' type='number' class='validate'><label class='active' for='btWholesale'>Wholesale Price</label>" +
                           "</div>" +
                           "<div class='input-field col s12'>" +
-                            "<input id='bowtieRetail' type='number' class='validate'><label class='active' for='bowtieRetail'>Retail Price</label>" +
+                            "<input id='btRetail' type='number' class='validate'><label class='active' for='btRetail'>Retail Price</label>" +
                           "</div>" +
                         "</div>" +
                       "</form>" +
@@ -55,73 +56,75 @@ var createIndex = function (bowties) {
             "</div>"
   };
   $('#content').append(html);
+  editBowtieEntryEventListener()
 };
 
-var updateEntry = function(event){
-  var bowId = event.currentTarget.dataset.id;
-  var bowtieParams = {
-    id: bowId,
-    material: $('#bowtieMaterial').val(),
-    pattern: $('#bowtiePattern').val(),
-    style: $('#bowtieStyle').val(),
-    image_url: $('#bowtieUrl').val(),
-    wholesale_price: $('#bowtieWholesale').val(),
-    retail_price: $('#bowtieRetail').val()
-  }
-  $.ajax({
-    method: 'PATCH',
-    url: '/api/bowties/' + bowId,
-    data: bowtieParams,
-    dataType: 'json'
-  }).done(function(){
-    // getBowties();
-    window.location.href = '/bowties'
-  })
-}
-
-var deleteEntry = function(event) {
-  var bowId = event.currentTarget.dataset.id;
-  $.ajax({
-    method: 'DELETE',
-    url: '/api/bowties/' + bowId,
-  }).done(function(){
-    window.location.href = '/bowties'
-  })
-}
-
-// var editBowtieEntryEventListener = function() {
-//   $('#updateBowtie').click(function(event) {
-//     var bowId = event.currentTarget.dataset.id;
-//     var bowtieParams = {
-//       id: bowId,
-//       material: $('#bowtieMaterial').val(),
-//       pattern: $('#bowtiePattern').val(),
-//       style: $('#bowtieStyle').val(),
-//       image_url: $('#bowtieUrl').val(),
-//       wholesale_price: $('#bowtieWholesale').val(),
-//       retail_price: $('#bowtieRetail').val()
-//     }
-//     $.ajax({
-//       method: 'PATCH',
-//       url: '/api/bowties/' + bowId,
-//       data: bowtieParams,
-//       dataType: 'json'
-//     }).done(function(){
-//       // getBowties();
-//       window.location.href = '/bowties'
-//     })
-//   })
-
-//   $('#deleteBowtie').click(function(event){
-//     var bowId = event.currentTarget.dataset.id;
-//     $.ajax({
-//       method: 'DESTROY',
-//       url: '/api/bowties/' + bowId,
-//     }).done(function(){
-//       window.location.href = '/bowties'
-//     })
+// var updateEntry = function(event){
+//   var bowId = event.currentTarget.dataset.id;
+//   var bowtieParams = {
+//     id: bowId,
+//     material: $('#btMaterial').val(),
+//     pattern: $('#btPattern').val(),
+//     style: $('#btStyle').val(),
+//     image_url: $('#btUrl').val(),
+//     wholesale_price: $('#btWholesale').val(),
+//     retail_price: $('#btRetail').val()
+//   }
+//   $.ajax({
+//     method: 'PATCH',
+//     url: '/api/bowties/' + bowId,
+//     data: bowtieParams,
+//     dataType: 'json'
+//   }).done(function(){
+//     // getBowties();
+//     window.location.href = '/bowties'
 //   })
 // }
+
+// var deleteEntry = function(event) {
+//   var bowId = event.currentTarget.dataset.id;
+//   $.ajax({
+//     method: 'DELETE',
+//     url: '/api/bowties/' + bowId,
+//   }).done(function(){
+//     window.location.href = '/bowties'
+//   })
+// }
+
+var editBowtieEntryEventListener = function() {
+  $('#updateBowtie').click(function(event) {
+    var bowId = event.currentTarget.dataset.id;
+    var bowtieParams = {
+      id: bowId,
+      material: $('#btMaterial').val(),
+      pattern: $('#btPattern').val(),
+      style: $('#btStyle').val(),
+      image_url: $('#btUrl').val(),
+      wholesale_price: $('#btWholesale').val(),
+      retail_price: $('#btRetail').val()
+    }
+    $.ajax({
+      method: 'PATCH',
+      url: '/api/bowties/' + bowId,
+      data: bowtieParams,
+      dataType: 'json'
+    }).done(function(){
+      // getBowties();
+      window.location.href = '/bowties'
+    })
+  })
+
+  $('#deleteBowtie').click(function(event){
+    var bowId = event.currentTarget.dataset.id;
+    $.ajax({
+      method: 'DESTROY',
+      url: '/api/bowties/' + bowId,
+    }).done(function(){
+      getBowties();
+      // window.location.href = '/bowties'
+    })
+  })
+}
 
 var getBowties = function () {
   $.ajax({
@@ -202,8 +205,8 @@ var addBowtieEntryEventListener = function() {
       data: bowtieParams,
       dataType: 'json'
     }).done(function(){
-      // createIndex();
-      window.location.href = '/bowties'
+      getBowties();
+      // window.location.href = '/bowties'
     })
   })
 }
@@ -215,12 +218,12 @@ $('#addContent').click(function() {
   createModal();
 });
 
-$('#updateBowtie').click(function(event) {
-  updateEntry(event);
-})
+// $('#updateBowtie').click(function(event) {
+//   updateEntry(event);
+// })
 
-$('#deleteBowtie').click(function(event) {
-  deleteEntry(event);
-})
+// $('#deleteBowtie').click(function(event) {
+//   deleteEntry(event);
+// })
 
 })
