@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'pry-rails'
 
 gem 'materialize-sass'
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'material_icons'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
